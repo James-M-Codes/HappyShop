@@ -22,7 +22,10 @@ import java.util.Map;
  */
 public class CustomerModel {
     public CustomerView cusView;
-    public DatabaseRW databaseRW; //Interface type, not specific implementation
+    public DatabaseRW databaseRW;
+    public RemoveProductNotifier Rmvprod;
+
+    //Interface type, not specific implementation
                                   //Benefits: Flexibility: Easily change the database implementation.
 
     private Product theProduct =null; // product found from search
@@ -36,23 +39,23 @@ public class CustomerModel {
 
     //SELECT productID, description, image, unitPrice,inStock quantity
     void search() throws SQLException {
-        String productId = cusView.tfId.getText().trim();
-        if(!productId.isEmpty()){
-            theProduct = databaseRW.searchByProductId(productId); //search database
+        String tfKeyword = cusView.tfunify.getText().trim();
+        if(!tfKeyword.isEmpty()){
+            theProduct = databaseRW.searchProduct(tfKeyword).getFirst(); //search database
             if(theProduct != null && theProduct.getStockQuantity()>0){
                 double unitPrice = theProduct.getUnitPrice();
                 String description = theProduct.getProductDescription();
                 int stock = theProduct.getStockQuantity();
 
-                String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", productId, description, unitPrice);
+                String baseInfo = String.format("Product_Id: %s\n%s,\nPrice: £%.2f", tfKeyword, description, unitPrice);
                 String quantityInfo = stock < 100 ? String.format("\n%d units left.", stock) : "";
                 displayLaSearchResult = baseInfo + quantityInfo;
                 System.out.println(displayLaSearchResult);
             }
             else{
                 theProduct=null;
-                displayLaSearchResult = "No Product was found with ID " + productId;
-                System.out.println("No Product was found with ID " + productId);
+                displayLaSearchResult = "No Product was found with ID " + tfKeyword;
+                System.out.println("No Product was found with ID " + tfKeyword);
             }
         }else{
             theProduct=null;
@@ -67,10 +70,20 @@ public class CustomerModel {
 
             // trolley.add(theProduct) — Product is appended to the end of the trolley.
             // To keep the trolley organized, add code here or call a method that:
-            //TODO
-            // 1. Merges items with the same product ID (combining their quantities).
-            // 2. Sorts the products in the trolley by product ID.
-            trolley.add(theProduct);
+            //Completed:
+            // items with the same product ID now merge in the Trolley.
+            //
+
+
+            if(trolley.contains(theProduct)) {
+                int index = trolley.indexOf(theProduct);
+                Product product = trolley.get(index);
+                if (product!= null) {
+                    product.setOrderedQuantity(product.getOrderedQuantity() + 1);
+                }
+            } else {
+                trolley.add(theProduct);
+            }
             displayTaTrolley = ProductListFormatter.buildString(trolley); //build a String for trolley so that we can show it
         }
         else{
@@ -79,6 +92,11 @@ public class CustomerModel {
         }
         displayTaReceipt=""; // Clear receipt to switch back to trolleyPage (receipt shows only when not empty)
         updateView();
+    }
+
+    void OrganisedTrolley()
+    {
+
     }
 
     void checkOut() throws IOException, SQLException {
