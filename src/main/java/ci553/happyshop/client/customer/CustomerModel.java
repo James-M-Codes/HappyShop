@@ -126,11 +126,17 @@ public class CustomerModel {
             else{ // Some products have insufficient stock — build an error message to inform the customer
                 StringBuilder errorMsg = new StringBuilder();
                 for(Product p : insufficientProducts){
+                    //removes the product if insufficient stock
+                    trolley.remove(p);
+                    //below this comment, the code there produces a good error format.
                     errorMsg.append("\u2022 "+ p.getProductId()).append(", ")
                             .append(p.getProductDescription()).append(" (Only ")
                             .append(p.getStockQuantity()).append(" available, ")
                             .append(p.getOrderedQuantity()).append(" requested)\n");
                 }
+                Rmvprod.showRemovalMsg(errorMsg.toString());
+                System.out.println("insufficient stock");
+
                 theProduct=null;
 
                 //TODO

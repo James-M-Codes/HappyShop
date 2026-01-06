@@ -81,9 +81,10 @@ public class Main extends Application {
         cusModel.databaseRW = databaseRW;
         cusView.start(new Stage());
 
-        //RemoveProductNotifier removeProductNotifier = new RemoveProductNotifier();
-        //removeProductNotifier.cusView = cusView;
-        //cusModel.removeProductNotifier = removeProductNotifier;
+        //uncommented the code in Main for remove product notifier and added in the new variable Rmvprod
+        RemoveProductNotifier removeProductNotifier = new RemoveProductNotifier();
+        removeProductNotifier.cusView = cusView;
+        cusModel.Rmvprod = removeProductNotifier;
     }
 
     /** The picker GUI, - for staff to pack customer's order,
