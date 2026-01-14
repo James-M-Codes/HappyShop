@@ -54,13 +54,13 @@ public class CustomerModel {
             }
             else{
                 theProduct=null;
-                displayLaSearchResult = "No Product was found with ID " + tfKeyword;
-                System.out.println("No Product was found with ID " + tfKeyword);
+                displayLaSearchResult = "No Product was found" + tfKeyword;
+                System.out.println("No Product was found" + tfKeyword);
             }
         }else{
             theProduct=null;
-            displayLaSearchResult = "Please type ProductID";
-            System.out.println("Please type ProductID.");
+            displayLaSearchResult = "Please type Product name or ID";
+            System.out.println("Please type Product name/ID.");
         }
         updateView();
     }
