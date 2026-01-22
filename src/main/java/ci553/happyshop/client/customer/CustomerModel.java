@@ -39,9 +39,10 @@ public class CustomerModel {
 
     //SELECT productID, description, image, unitPrice,inStock quantity
     void search() throws SQLException {
+        // Unifies the searchbar for a better customer experience.
         String tfKeyword = cusView.tfunify.getText().trim();
         if(!tfKeyword.isEmpty()){
-            theProduct = databaseRW.searchProduct(tfKeyword).getFirst(); //search database
+            theProduct = databaseRW.searchProduct(tfKeyword).getFirst(); //search database and grabs first result
             if(theProduct != null && theProduct.getStockQuantity()>0){
                 double unitPrice = theProduct.getUnitPrice();
                 String description = theProduct.getProductDescription();

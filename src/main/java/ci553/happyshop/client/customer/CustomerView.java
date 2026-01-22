@@ -37,7 +37,7 @@ public class CustomerView  {
     private VBox vbTrolleyPage;  //vbTrolleyPage and vbReceiptPage will swap with each other when need
     private VBox vbReceiptPage;
 
-
+// allows for a text field called tfunify to be made.
     TextField tfunify;
 
     //four controllers needs updating when program going on
@@ -80,7 +80,7 @@ public class CustomerView  {
         laPageTitle.setStyle(UIStyle.labelTitleStyle);
 
 
-
+// this is where the text field is generated to search for goods.
         tfunify = new TextField();
         tfunify.setStyle(UIStyle.textFiledStyle);
 
